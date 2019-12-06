@@ -1,7 +1,8 @@
 import puyo_class
+
+import sys
 import pygame
 from pygame.locals import *
-import sys
 import numpy as np
 import collections
 

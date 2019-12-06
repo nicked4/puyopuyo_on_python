@@ -59,7 +59,11 @@ class PuyoSuper(metaclass=ABCMeta):
         self.gameover = False
 
     # ゲーム開始時のリセット
-    def reset(self):
+    def reset(self, seed=False):
+        # シードの設定（デフォルトでは時間をシードにする）
+        if seed:
+            np.random.seed(seed=seed)
+
         # ツモしたぷよを指定した位置に配置
         self.x_axis = 3
         self.y_axis = 2
@@ -73,6 +77,7 @@ class PuyoSuper(metaclass=ABCMeta):
         self.color_rotate_next = np.random.randint(1, 5)
         self.color_axis_nexnex = np.random.randint(1, 5)
         self.color_rotate_nexnex = np.random.randint(1, 5)
+        self.tsumo()
 
         # フィールドと制御用変数初期化
         self.step = 1
@@ -83,7 +88,6 @@ class PuyoSuper(metaclass=ABCMeta):
         self.move_time = 0
 
         # 発火判定、スコア計算回りリセット
-        self.fire_flaged_puyo = []
         self.link_counter = 0
         self.link_bonus_sum = 0
         self.chain_number = 0
@@ -145,7 +149,7 @@ class PuyoSuper(metaclass=ABCMeta):
 
     # 回転用関数
     def rotate(self, way):
-        if way == 1:    # 時計回り（右下の方が数が大きい）
+        if way == 1:    # 時計回り（数値の大きいほど盤面において右下を示す）
             # 軸ぷよより上に回転ぷよがある
             if [self.x_axis - self.x_rotate, self.y_axis - self.y_rotate] == [0, 1]:
                 if self.field[self.x_axis - 1][self.y_axis] != 0 and self.field[self.x_axis + 1][self.y_axis] != 0:
@@ -186,7 +190,7 @@ class PuyoSuper(metaclass=ABCMeta):
                 self.y_rotate += -1
 
         elif way == 2:    # 反時計回り
-            # 軸ぷよより上に回転ぷよがある（右下の方が数が大きい）
+            # 軸ぷよより上に回転ぷよがある
             if [self.x_axis - self.x_rotate, self.y_axis - self.y_rotate] == [0, 1]:
                 if self.field[self.x_axis - 1][self.y_axis] != 0 and self.field[self.x_axis + 1][self.y_axis] != 0:
                     self.y_axis += -1
@@ -280,13 +284,19 @@ class PuyoSuper(metaclass=ABCMeta):
             self.flag_over4links(i, j - 1)
 
     # 発火判定，連結数が0のぷよを始点に連結数を計算する
+    '''
+    まだ未調査のぷよがあったらlink_counter=0でlink_calculation(i,j)を回す
+    link_calculationは呼ばれるたびlink_counter++をしてlink_is_counted=link_counter
+    同じ色かつ未調査（link_is_counted==0）のぷよに移動
+    連結数計算の結果、link_counter>=4でflag_over4linksをして消すぷよにマーキングする
+    最後にfireで一斉に除去
+    '''
     def can_fire(self):
         judge = False
         self.deleted_puyo_number = 0
         self.color_list = []
         for i in range(1, WIDTH + 1):
             for j in range(1, HEIGHT + 1):
-                print(i, j)
                 if self.field[i][j] != 0 and self.fire_flaged_puyo[i][j] == 0:
                     self.link_counter = 0
                     self.link_is_counted = (np.array(self.link_is_counted) * 0).tolist()
@@ -328,7 +338,7 @@ class PuyoSuper(metaclass=ABCMeta):
             return 0
         elif 5 <= link <= 10:
             return link - 3
-        elif 11 <= link:
+        elif 11 <= link <= 6 * 12:
             return 10
         else:
             print("link is out of range")
