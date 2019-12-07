@@ -8,6 +8,21 @@ I develop with python, so I had to implement puyopuyo simulator on python.
 
 This program has tokoton puyopuyo mode only(for one person).  
 So, I should implement battle mode sometime.  
-And actually, I use the other program specialized for experiment instead of this program.  
-This program is for play.  
+puyo_environment.py is for play.
+puyo_sumulator.py is specialized for experiment instead of puyo_environment.py.
 Special library used on this program is pygame only.  
+
+
+
+# python上でのぷよぷよ開発
+
+## 修士研究用のプログラムです
+
+私は修士研究のテーマとして、ぷよぷよに深層強化学習を応用して強いAIをつくる、といったことを扱っています。
+開発はpythonで行っているため、pythonでぷよぷよのシミュレータを作成する必要がありました（それ以外の方法もありますが）。
+
+このプログラムは一人用モードのとことんぷよぷよのみしか実装していません。
+いずれは対戦なども見据えているため、そちらの開発もする必要があります。
+しかし、まずは一人用で強いAIができることが大前提のため、そちらの方は追々の実装になります。
+ちなみにこのプログラムで用いている特別なライブラリはpygameくらいです。
+
