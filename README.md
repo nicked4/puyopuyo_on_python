@@ -12,7 +12,7 @@ So, I should implement battle mode sometime.
 **puyo_simulator.py** is specialized for experiment instead of puyo_environment.py.  
 Special library used on this program is pygame only.  
 
-![puyoAIdemo20191127](https://user-images.githubusercontent.com/51912962/72087174-55024f80-334b-11ea-976f-55b57f503a26.gif)
+![puyoAIdemo200116gif](https://user-images.githubusercontent.com/51912962/74588418-a9ca7180-503f-11ea-9864-b0723a8152b7.gif)
 
 # python上でのぷよぷよ開発
 
