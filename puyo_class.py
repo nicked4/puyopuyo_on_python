@@ -1,6 +1,7 @@
 import numpy as np
 from abc import ABCMeta
 from abc import abstractmethod
+import pygame
 
 """
 ぷよぷよのプレー用、学習用、AIデモ用のスーパークラス
@@ -10,6 +11,14 @@ from abc import abstractmethod
 
 WIDTH = 6
 HEIGHT = 13
+
+# 画面サイズ、盤面サイズ、移動速度などの設定
+SCREEN_SIZE = (1200, 900)
+ROTATE_TIME = 40
+MOVE_TIME = 4
+FIRE_TIME = 30
+FALL_TIME = 5
+size = 50
 
 
 class PuyoSuper(metaclass=ABCMeta):
@@ -403,6 +412,37 @@ class PuyoSuper(metaclass=ABCMeta):
         puyo_info = np.array(puyo_info, dtype=np.float32)
         return field_info, puyo_info
 
+
+
     @abstractmethod
     def flow_management(self):
         pass
+
+
+class Graphic:
+    # ゲームグラフィック
+    def __init__(self):
+        # puyo_graphicが表示するぷよの画像
+        self.puyo_graphic = [0] * 10
+        self.puyo_graphic[0] = pygame.image.load("picture/blue.png")
+        self.puyo_graphic[1] = pygame.image.load("picture/puyo_red.png")
+        self.puyo_graphic[2] = pygame.image.load("picture/puyo_blu.png")
+        self.puyo_graphic[3] = pygame.image.load("picture/puyo_ylw.png")
+        self.puyo_graphic[4] = pygame.image.load("picture/puyo_grn.png")
+        self.puyo_graphic[5] = pygame.image.load("picture/puyo_ppl.png")
+        self.puyo_graphic[6] = pygame.image.load("picture/puyo_jam.png")
+        self.puyo_graphic[7] = pygame.image.load("picture/puyo_jam.png")
+        self.puyo_graphic[8] = pygame.image.load("picture/puyo_jam.png")
+        self.puyo_graphic[9] = pygame.image.load("picture/black.jpg")
+
+        # その他タイトルの画像と整形
+        self.background = pygame.image.load("picture/puyo_background.png")
+        self.title = pygame.image.load("picture/puyo_esports.jpg")
+        self.gameover = pygame.image.load("picture/gameover.png")
+        self.peke = pygame.image.load("picture/peke.png")
+        self.background = pygame.transform.smoothscale(self.background, SCREEN_SIZE)
+        self.title = pygame.transform.smoothscale(self.title, SCREEN_SIZE)
+        self.gameover = pygame.transform.smoothscale(self.gameover, SCREEN_SIZE)
+        self.peke = pygame.transform.smoothscale(self.peke, (size, size))
+        for i in range(10):
+            self.puyo_graphic[i] = pygame.transform.smoothscale(self.puyo_graphic[i], (size, size))

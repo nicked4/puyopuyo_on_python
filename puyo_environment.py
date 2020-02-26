@@ -6,13 +6,14 @@ from pygame.locals import *
 import numpy as np
 import collections
 
-# 画面サイズ、盤面サイズ、移動速度などの設定
-SCREEN_SIZE = (1200, 900)
-ROTATE_TIME = 40
-MOVE_TIME = 4
-FIRE_TIME = 30
-FALL_TIME = 5
-size = 50
+WIDTH = puyo_class.WIDTH
+HEIGHT = puyo_class.HEIGHT
+SCREEN_SIZE = puyo_class.SCREEN_SIZE
+ROTATE_TIME = puyo_class.ROTATE_TIME
+MOVE_TIME = puyo_class.MOVE_TIME
+FIRE_TIME = puyo_class.FIRE_TIME
+FALL_TIME = puyo_class.FALL_TIME
+size = puyo_class.size
 
 
 class Player(puyo_class.PuyoSuper):
@@ -108,8 +109,8 @@ class Player(puyo_class.PuyoSuper):
 
     # 個々の描画を行う、後半のdraw()で全体を管理
     def draw_puyo(self):
-        for i in range(0, puyo_class.WIDTH + 2):
-            for j in range(0, puyo_class.HEIGHT + 2):
+        for i in range(0, WIDTH + 2):
+            for j in range(0, HEIGHT + 2):
                 if self.field[i][j] != 0:
                     screen.blit(graphic.puyo_graphic[self.field[i][j]],
                                 [i * size + SCREEN_SIZE[0] / 2 - 200, j * size + SCREEN_SIZE[1] / 2 - 375])
@@ -117,10 +118,10 @@ class Player(puyo_class.PuyoSuper):
 
     def draw_tsumo(self):
         if self.color_axis != 0 and self.color_rotate != 0:
-            screen.blit(graphic.puyo_graphic[self.color_axis], [self.x_axis * size + SCREEN_SIZE[0] / 2 - 200,
-                                                                self.y_axis * size + SCREEN_SIZE[1] / 2 - 375])
-            screen.blit(graphic.puyo_graphic[self.color_rotate], [self.x_rotate * size + SCREEN_SIZE[0] / 2 - 200,
-                                                                  self.y_rotate * size + SCREEN_SIZE[1] / 2 - 375])
+            screen.blit(graphic.puyo_graphic[self.color_axis],
+                        [self.x_axis * size + SCREEN_SIZE[0] / 2 - 200, self.y_axis * size + SCREEN_SIZE[1] / 2 - 375])
+            screen.blit(graphic.puyo_graphic[self.color_rotate],
+                        [self.x_rotate * size + SCREEN_SIZE[0] / 2 - 200, self.y_rotate * size + SCREEN_SIZE[1] / 2 - 375])
 
     def draw_next(self):
         screen.blit(graphic.puyo_graphic[self.color_axis_next],
@@ -135,49 +136,17 @@ class Player(puyo_class.PuyoSuper):
     # 描画全体
     def draw(self):
         screen.blit(graphic.background, (0, 0))  # 背景（画像）
-        screen.fill((0, 50, 50), Rect(SCREEN_SIZE[0] / 2 - 200, SCREEN_SIZE[1] / 2 - 375,
-                                      (puyo_class.WIDTH + 1) * size, (puyo_class.HEIGHT + 1) * size))
-        screen.fill((200, 200, 200), Rect(SCREEN_SIZE[0] / 2 - 200, SCREEN_SIZE[1] / 2 - 375,
-                                          (puyo_class.WIDTH + 1) * size, 2 * size))
-        screen.fill((0, 50, 50),
-                    Rect(SCREEN_SIZE[0] / 2 + 4.5 * size, SCREEN_SIZE[1] / 2 - 7.5 * size, 3 * size, 5 * size))
+        screen.fill((0, 50, 50), Rect(SCREEN_SIZE[0] / 2 - 200, SCREEN_SIZE[1] / 2 - 375, (WIDTH + 1) * size, (HEIGHT + 1) * size))
+        screen.fill((200, 200, 200), Rect(SCREEN_SIZE[0] / 2 - 200, SCREEN_SIZE[1] / 2 - 375, (WIDTH + 1) * size, 2 * size))
+        screen.fill((0, 50, 50), Rect(SCREEN_SIZE[0] / 2 + 4.5 * size, SCREEN_SIZE[1] / 2 - 7.5 * size, 3 * size, 5 * size))
         self.draw_puyo()
         self.draw_tsumo()
         self.draw_next()
         screen.fill((0, 50, 50), Rect(100, 100, 240, 450))
-        for i in range(1, puyo_class.WIDTH + 1):
-            for j in range(1, puyo_class.HEIGHT + 1):
+        for i in range(1, WIDTH + 1):
+            for j in range(1, HEIGHT + 1):
                 field = sysfont.render(str(self.field[i][j]), True, (255, 255, 255))
                 screen.blit(field, (100 + 30 * i, 100 + 30 * j))
-
-
-# ゲームグラフィック
-class Graphic:
-    def __init__(self):
-        # puyo_graphicが表示するぷよの画像
-        self.puyo_graphic = [0] * 10
-        self.puyo_graphic[0] = pygame.image.load("picture/blue.png")
-        self.puyo_graphic[1] = pygame.image.load("picture/puyo_red.png")
-        self.puyo_graphic[2] = pygame.image.load("picture/puyo_blu.png")
-        self.puyo_graphic[3] = pygame.image.load("picture/puyo_ylw.png")
-        self.puyo_graphic[4] = pygame.image.load("picture/puyo_grn.png")
-        self.puyo_graphic[5] = pygame.image.load("picture/puyo_ppl.png")
-        self.puyo_graphic[6] = pygame.image.load("picture/puyo_jam.png")
-        self.puyo_graphic[7] = pygame.image.load("picture/puyo_jam.png")
-        self.puyo_graphic[8] = pygame.image.load("picture/puyo_jam.png")
-        self.puyo_graphic[9] = pygame.image.load("picture/black.jpg")
-
-        # その他タイトルの画像と整形
-        self.background = pygame.image.load("picture/puyo_background.png")
-        self.title = pygame.image.load("picture/puyo_esports.jpg")
-        self.gameover = pygame.image.load("picture/gameover.png")
-        self.peke = pygame.image.load("picture/peke.png")
-        self.background = pygame.transform.smoothscale(self.background, SCREEN_SIZE)
-        self.title = pygame.transform.smoothscale(self.title, SCREEN_SIZE)
-        self.gameover = pygame.transform.smoothscale(self.gameover, SCREEN_SIZE)
-        self.peke = pygame.transform.smoothscale(self.peke, (size, size))
-        for i in range(10):
-            self.puyo_graphic[i] = pygame.transform.smoothscale(self.puyo_graphic[i], (size, size))
 
 
 # 終了判定
@@ -192,12 +161,12 @@ def main():
     global graphic
     global sysfont
     screen = pygame.display.set_mode(SCREEN_SIZE)  # ウィンドウの大きさ
+    graphic = puyo_class.Graphic()
     sysfont = pygame.font.SysFont(None, 40)
 
     # 画面更新時間を管理
     fps = pygame.time.Clock()
     player1 = Player()
-    graphic = Graphic()
     player1.reset()
     game_mode = 0
 
@@ -217,9 +186,9 @@ def main():
 
         # スタート待機中
         elif game_mode == 0:
-            screen.blit(graphic.title, (0, 0))  # タイトル（画像）
+            screen.blit(graphic.title, (0, 0))
         elif game_mode == 2:
-            screen.blit(graphic.gameover, (0, 0))  # タイトル（画像）
+            screen.blit(graphic.gameover, (0, 0))
 
         # エンターキーでリセット＆スタート
         pressed = pygame.key.get_pressed()

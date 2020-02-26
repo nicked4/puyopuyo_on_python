@@ -2,6 +2,7 @@ import puyo_class
 
 import numpy as np
 import collections
+
 """
 puyo_class.pyを継承したサブクラス
 シミュレータとして用いる
@@ -19,8 +20,8 @@ Rotation: 時計回転   1
 見えている範囲は WIDTH * (HEIGHT - 1)
 """
 
-WIDTH = 6
-HEIGHT = 13
+WIDTH = puyo_class.WIDTH
+HEIGHT = puyo_class.HEIGHT
 
 
 class Player(puyo_class.PuyoSuper):
