@@ -8,9 +8,14 @@ I develop with python, so I had to implement puyopuyo simulator on python.
 
 This program has tokoton puyopuyo mode only(for one person).  
 So, I should implement battle mode sometime.  
-**puyo_environment.py** is for play.  
-**puyo_simulator.py** is specialized for experiment instead of puyo_environment.py.  
 Special library used on this program is pygame only.  
+
+| File name | use |
+|---|---|
+| **puyo_class.py** | super class of following 3 files |
+| **puyo_environment.py** | for play |
+| **puyo_simulator.py** | simulator specialized for experiment |
+| **puyo_AIplay.py** | demonstration by AI |
 
 ![puyoAIdemo200116gif](https://user-images.githubusercontent.com/51912962/74588418-a9ca7180-503f-11ea-9864-b0723a8152b7.gif)
 
@@ -24,6 +29,11 @@ Special library used on this program is pygame only.
 このプログラムは一人用モードのとことんぷよぷよのみしか実装していません。  
 いずれは対戦なども見据えているため、そちらの開発もする必要があります。  
 しかし、まずは一人用で強いAIができることが大前提のため、そちらの方は追々の実装になります。  
-**puyo_environment.py**がゲームプレーをするファイル、**puyo_simulator.py**が学習の際に用いるシミュレータ、**puyo_class.py**はそれぞれのスーパークラスです。  
-ちなみに、このプログラムで用いている特別なライブラリはpygameくらいです。  
+このプログラムで用いている特別なライブラリはpygameくらいです。  
 
+| ファイル名| 使用する|
+| --- | ---- |
+| ** puyo_class.py ** | 次の3つのファイルのスーパークラス |
+| ** puyo_environment.py ** | ゲームをプレーできるクラス |
+| ** puyo_simulator.py ** | 学習に用いるシミュレータ |
+| ** puyo_AIplay.py ** | AIによるデモンストレーション |
