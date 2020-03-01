@@ -28,7 +28,7 @@ Special library used on this program is pygame only.
 
 # python上でのぷよぷよ開発
 
-## 修士研究用のプログラムです
+## 修士研究用のプログラム
 
 私は修士研究のテーマとして、ぷよぷよに深層強化学習を応用して強いAIをつくる、といったことを扱っている。  
 開発はpythonで行っているため、pythonでぷよぷよのシミュレータを作成する必要があった（それ以外の方法もあるが）。  
@@ -45,7 +45,7 @@ Special library used on this program is pygame only.
 | **puyo_simulator.py** | 学習に用いるシミュレータ |
 | **puyo_AIplay.py** | AIによるデモンストレーション |
  
- ## "puyo_simulator.py"の操作方法についての説明
+ ## "puyo_simulator.py"の操作方法について
 | メソッド | 動作 |
 |---|---|
 | **get_state** | フィールドとツモの状態を取得する |
