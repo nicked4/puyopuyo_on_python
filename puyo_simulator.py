@@ -132,18 +132,6 @@ class Player(puyo_class.PuyoSuper):
         return self.get_state(), self.score_turn, done, self.chain_number
         # return self.get_state(), self.chain_number, done, self.chain_number
 
-    # def rl_step(self, num):
-    #     done = False
-    #     self.score_turn = 0
-    #     self.auto_play(num)
-    #     self.flow_management()
-    #     if self.gameover:
-    #         done = True
-    #     # field_state, _ = self.get_state()
-    #     # print(str(field_state.T))
-    #     return self.get_state(), self.score_turn, done, self.chain
-    #     # return self.get_state(), self.chain, done, self.chain
-
     # 22種類の行動をする
     def auto_play(self, num):
         cnt = 0
